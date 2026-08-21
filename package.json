@@ -1,0 +1,15 @@
+{
+  "name": "trolley-engine",
+  "version": "1.0.0",
+  "description": "A tiny dependency-free 2D game engine and two games built on it — Tesco intern hackathon reference implementation",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@picocss/pico": "^2.0.6",
+    "express": "^4.19.2"
+  }
+}
