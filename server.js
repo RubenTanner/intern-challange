@@ -15,7 +15,7 @@ app.use(
 // The shared engine, importable from both games as /engine/*.js
 app.use("/engine", express.static(path.join(root, "engine")));
 
-app.use("/basic", express.static(path.join(root, "basic")));
+app.use("/platformer", express.static(path.join(root, "platformer")));
 app.use("/cool", express.static(path.join(root, "cool")));
 app.use("/", express.static(path.join(root, "public")));
 

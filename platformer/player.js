@@ -1,12 +1,6 @@
-// Player controller: movement feel lives here.
-//
-// Coyote time, jump buffering and variable jump height are all timers in
-// plain state — nothing here touches the DOM or a clock other than the
-// loop's dt.
-
-import { createEntity } from '/engine/entity.js';
-import { applyGravity, moveBody } from '/engine/physics.js';
-import { PLAYER, PHYSICS } from './config.js';
+import { createEntity } from "/engine/entity.js";
+import { applyGravity, moveBody } from "/engine/physics.js";
+import { PLAYER, PHYSICS } from "./config.js";
 
 export const createPlayer = (start) => ({
   ...createEntity({
@@ -25,11 +19,14 @@ export const createPlayer = (start) => ({
 
 export const updatePlayer = (player, input, solids, audio, particles, dt) => {
   // --- horizontal ---
-  const dir = (input.isDown('right') ? 1 : 0) - (input.isDown('left') ? 1 : 0);
+  const dir = (input.isDown("right") ? 1 : 0) - (input.isDown("left") ? 1 : 0);
   const accel = player.onGround ? PLAYER.accel : PLAYER.airAccel;
   if (dir !== 0) {
     player.vx += dir * accel * dt;
-    player.vx = Math.max(-PLAYER.maxSpeed, Math.min(PLAYER.maxSpeed, player.vx));
+    player.vx = Math.max(
+      -PLAYER.maxSpeed,
+      Math.min(PLAYER.maxSpeed, player.vx),
+    );
     player.facing = dir;
   } else {
     player.vx *= Math.exp(-PLAYER.friction * dt);
@@ -37,8 +34,12 @@ export const updatePlayer = (player, input, solids, audio, particles, dt) => {
   }
 
   // --- jump timers ---
-  player.coyote = player.onGround ? PLAYER.coyoteTime : Math.max(0, player.coyote - dt);
-  player.buffer = input.wasPressed('jump') ? PLAYER.jumpBuffer : Math.max(0, player.buffer - dt);
+  player.coyote = player.onGround
+    ? PLAYER.coyoteTime
+    : Math.max(0, player.coyote - dt);
+  player.buffer = input.wasPressed("jump")
+    ? PLAYER.jumpBuffer
+    : Math.max(0, player.buffer - dt);
 
   if (player.buffer > 0 && player.coyote > 0) {
     player.vy = -PLAYER.jumpVelocity;
@@ -46,11 +47,17 @@ export const updatePlayer = (player, input, solids, audio, particles, dt) => {
     player.buffer = 0;
     player.squashX = 0.7; // stretch tall on take-off
     player.squashY = 1.3;
-    audio.tone({ freq: 300, end: 640, duration: 0.14, type: 'square', volume: 0.08 });
+    audio.tone({
+      freq: 300,
+      end: 640,
+      duration: 0.14,
+      type: "square",
+      volume: 0.08,
+    });
   }
 
   // variable jump height: releasing jump while rising cuts the ascent
-  if (!input.isDown('jump') && player.vy < 0) {
+  if (!input.isDown("jump") && player.vy < 0) {
     player.vy *= 1 - (1 - PLAYER.jumpCutFactor) * Math.min(1, dt * 20);
   }
 
@@ -72,7 +79,7 @@ export const updatePlayer = (player, input, solids, audio, particles, dt) => {
       spread: Math.PI,
       life: [0.15, 0.35],
       size: [2, 4],
-      color: '#c9c3b4',
+      color: "#c9c3b4",
       drag: 4,
     });
   }

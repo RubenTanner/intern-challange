@@ -1,7 +1,6 @@
 {
-  "name": "trolley-engine",
+  "name": "rubens-cool-game",
   "version": "1.0.0",
-  "description": "A tiny dependency-free 2D game engine and two games built on it — Tesco intern hackathon reference implementation",
   "type": "module",
   "main": "server.js",
   "scripts": {
