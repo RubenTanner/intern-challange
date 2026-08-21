@@ -1,2 +1,7 @@
 # intern-challange
-Just my own take on the interns challenge
+
+npm i
+
+npm run start
+
+Boom
