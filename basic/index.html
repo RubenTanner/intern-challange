@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Aisle Runner — platformer</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%23131722'/><rect x='4' y='8' width='8' height='6' rx='2' fill='%235aa9e6'/></svg>"
+    />
+    <link rel="stylesheet" href="/vendor/pico/pico.min.css" id="pico-style" />
+    <link rel="stylesheet" href="style.css" id="game-style" />
+    <script>
+      // ?plain swaps in the bare-bones testing stylesheet and drops Pico
+      if (new URLSearchParams(location.search).has("plain")) {
+        document.getElementById("pico-style").remove();
+        document.getElementById("game-style").setAttribute("href", "plain.css");
+      }
+    </script>
+  </head>
+  <body>
+    <main class="game-shell">
+      <div class="game-frame">
+        <canvas id="game" aria-label="Aisle Runner game area"></canvas>
+
+        <!-- HUD: DOM layer, absolutely positioned over the canvas.
+           Written by the game, never read by it. -->
+        <div class="hud" aria-hidden="true">
+          <span id="hud-level"></span>
+          <span id="hud-coins"></span>
+        </div>
+        <button id="btn-mute" class="mute" aria-label="toggle sound">
+          SND ON
+        </button>
+
+        <div class="overlay" id="overlay-menu" hidden>
+          <hgroup>
+            <h1>Aisle Runner</h1>
+            <p>A tiny platformer on a tiny engine</p>
+          </hgroup>
+          <button id="btn-start">Play</button>
+          <p class="hints">
+            <kbd>←</kbd><kbd>→</kbd> move · <kbd>Space</kbd> jump ·
+            <kbd>Esc</kbd> pause · <kbd>R</kbd> restart level
+          </p>
+          <p class="hints">On touch: use the on-screen buttons, tap to jump</p>
+        </div>
+
+        <div class="overlay" id="overlay-paused" hidden>
+          <h2>Paused</h2>
+          <button id="btn-resume">Resume</button>
+          <p class="hints"><kbd>Esc</kbd> to resume</p>
+        </div>
+
+        <div class="overlay overlay-flash" id="overlay-clear" hidden>
+          <h2>Aisle cleared!</h2>
+        </div>
+
+        <div class="overlay" id="overlay-win" hidden>
+          <h2>Every aisle, cleared</h2>
+          <p id="win-stats"></p>
+          <p class="hints"><kbd>Space</kbd> to play again</p>
+        </div>
+
+        <!-- touch controls; shown only on coarse pointers via CSS -->
+        <div class="touch-controls" aria-hidden="true">
+          <div class="touch-pad">
+            <button id="btn-left">◀</button>
+            <button id="btn-right">▶</button>
+          </div>
+          <button id="btn-jump" class="touch-jump">▲</button>
+        </div>
+      </div>
+      <p class="backlink"><a href="/">← all games</a></p>
+    </main>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
